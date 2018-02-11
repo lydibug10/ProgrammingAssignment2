@@ -1,15 +1,30 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Functions for Week 3 Peer-graded Assignment
+##
+## Lydia Cromwell
 
-## Write a short comment describing this function
-
+## Create a matrix that can have its inverse cached
 makeCacheMatrix <- function(x = matrix()) {
-
+	i <- NULL
+	set <- function(y) {
+		x <<- y
+		i <<- NULL
+	}
+	get <- function() x
+	setcache <- function(inv) i <<- inv
+	getcache <- function() i
+	list (set = set, get = get, setcache = setcache, getcache = getcache)
 }
 
 
-## Write a short comment describing this function
-
+## Check cache for inverse. If not, calculate and cache inverse
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+	m <- x$getcache()
+	if (!is.null(m)) {
+		message("found cached inverse. fetching that.")
+		return(m)
+	}
+	data <- x$get()
+	m <- solve(data, ...)
+	x$setcache(m)
+	m
 }
